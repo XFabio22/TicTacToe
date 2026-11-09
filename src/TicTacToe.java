@@ -3,6 +3,19 @@ import java.util.Scanner;
 public class TicTacToe {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+    
+        String playAgain = "";
+
+        do {
+            
+             playGame(scan);
+            System.out.println("Play again? (y/n)");
+            playAgain = scan.nextLine();
+        } while (playAgain.equalsIgnoreCase("y"));
+
+    }
+
+    static char[][] createBoard (){
         char[][] board = new char[3][3];
         //rellenar el tablero 
         for (int row = 0; row < board.length; row++) {
@@ -10,6 +23,13 @@ public class TicTacToe {
                 board[row][col] = '-';
             }
         }
+
+        return board;
+    } 
+
+    static void playGame(Scanner scan ){
+        char[][] board = createBoard();
+
         char currentPlayer = 'X';
 
         while (!isFull(board)) {
@@ -38,11 +58,10 @@ public class TicTacToe {
 
         printBoard(board);
         if (hasWon(board, currentPlayer)) {
-            System.out.println(" Player " + currentPlayer +" Win");
+            System.out.println("Player " + currentPlayer +" wins!");
         }else{
             System.out.println("It's a draw!");
         }
-
     }
 
     static void printBoard(char[][] board) {
@@ -77,7 +96,7 @@ public class TicTacToe {
                 int index;
                 int cell = Integer.parseInt(num);
                 if (cell < 1 || cell > 9) {
-                    System.out.println("solo numeros de 1-9");
+                    System.out.println("Only numbers from 1 to 9.");
                     continue;
                 }
                 index = cell - 1;
@@ -91,7 +110,7 @@ public class TicTacToe {
                 return index;
 
             } catch (NumberFormatException e) {
-                System.out.println("eso no es un número");
+                System.out.println("That's not a number.");
             }
         }
     }
@@ -108,6 +127,7 @@ public class TicTacToe {
 
         return true;
     }
+
     static boolean hasWon(char[][] board,char currentPlayer){
          for (int row = 0; row < board.length; row++) {
             if (board[row][0] == currentPlayer && board[row][1] == currentPlayer && board[row][2] == currentPlayer) {
